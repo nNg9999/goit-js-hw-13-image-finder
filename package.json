@@ -66,11 +66,14 @@
     "core-js": "^3.6.4",
     "cors": "^2.8.5",
     "fs": "0.0.1-security",
+    "infinite-scroll": "^3.0.6",
     "lodash.debounce": "^4.0.8",
+    "material-design-icon-fonts": "^3.0.1",
     "material-design-icons": "^3.0.1",
     "net": "^1.0.2",
     "normalize.css": "^8.0.1",
     "notyf": "^3.4.0",
+    "pnotify": "^5.1.2",
     "toastr": "^2.1.4"
   }
 }

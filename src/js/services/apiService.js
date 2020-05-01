@@ -9,9 +9,9 @@ export default {
 
     return fetch(baseUrl + requestParams)
       .then(response => response.json())
-      .then(parsedResponse => {
+      .then(({ hits }) => {
         this.incrementPage();
-        return parsedResponse.hits;
+        return hits;
       });
   },
   get searchQuery() {

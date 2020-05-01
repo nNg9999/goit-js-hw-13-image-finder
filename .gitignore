@@ -81,12 +81,7 @@ typings/
 .dynamodb/
 
 # my file
-Primer_timer/
-Timer2/
 my-js/
-js/node_modules/
-
-
 
 # vscode
 .vscode

@@ -1,29 +1,27 @@
 import newsService from './services/apiService';
+import { infScrollObserver } from './ObserverInfScroll';
 import spinner from './spinner';
 import hitsListItemsTemplate from '../templates/gallery-list-items.hbs';
 
-import toastr from 'toastr';
-import 'toastr/build/toastr.min.css';
+import { alert, notice, info, success, error } from '@pnotify/core';
+import '@pnotify/core/dist/PNotify.css';
+import '@pnotify/core/BrightTheme.css';
+import '@pnotify/core/Material.css';
+
+import 'material-design-icons/iconfont/material-icons.css';
 
 import * as basicLightbox from 'basiclightbox';
 import 'basicLightbox/dist/basicLightbox.min.css';
 
-const instance = basicLightbox.create(`
-	<h1>Dynamic Content</h1>
-	<p>You can set the content of the lightbox with JS.</p>
-`);
-
-// console.log(basicLightbox);
-
 const refs = {
   searchForm: document.querySelector('#search-form'),
   galleryList: document.querySelector('#gallery-list'),
-  photoCard: document.querySelector('.js-photo-card'),
-  loadMoreBtn: document.querySelector('button[data-action="load-more"]'),
+  target: document.querySelector('#sentinel'),
+  // loadMoreBtn: document.querySelector('button[data-action="load-more"]'),
 };
 
 refs.searchForm.addEventListener('submit', searchFormSubmitHandler);
-refs.loadMoreBtn.addEventListener('click', loadMoreBtnHandler);
+// refs.loadMoreBtn.addEventListener('click', loadMoreBtnHandler);
 
 refs.galleryList.addEventListener('click', galleryClickHandler);
 
@@ -48,30 +46,55 @@ function searchFormSubmitHandler(e) {
 
   newsService.resetPage();
   newsService.searchQuery = input.value;
-  fetchArticles();
+  infScrollObserver(refs.target);
+  // fetchArticles();
   input.value = '';
 }
 
 function loadMoreBtnHandler() {
-  fetchArticles();
+  loadArticles();
 }
 
-function fetchArticles() {
+function loadArticles() {
   spinner.show();
 
   newsService
     .fetchArticles()
-    .then(showArticles(), toastr.success('Search New!'))
+    .then(data => {
+      if (!data.length) {
+        error({
+          text: 'Search NOT FIND!',
+        });
+      }
+      return data;
+    })
+    .then(
+      showArticles(),
+      success({
+        text: 'Search New!',
+      }),
+    )
+
     .catch(error => {
-      toastr.error('ERROR!');
+      error({
+        text: 'ERROR!',
+      });
+
       console.warn(error);
     });
 }
 
 function showArticles(hits) {
+  const position = refs.target.innerHeight;
+  // const position = window.scrollY + window.innerHeight;
+
   return hits => {
     spinner.hide();
     insertListItems(hits);
+    window.scrollTo({
+      top: position,
+      behavior: 'smooth',
+    });
   };
 }
 
@@ -83,3 +106,5 @@ function insertListItems(items) {
 function clearListItems() {
   refs.galleryList.innerHTML = '';
 }
+
+export { loadArticles, showArticles, insertListItems };

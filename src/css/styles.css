@@ -23,6 +23,37 @@ img {
   transition: opacity 300ms ease-in-out;
 }
 
+/*Search-form*/
+.search-form {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+.search-form-input,
+.button-search,
+.button {
+  height: 40px;
+  font-size: 18px;
+  border-radius: 5px;
+  background: rgba(208, 208, 208, 0.6);
+  box-shadow: inset 0 1px 0 #babbbb;
+  transition: background-color 200ms ease-in-out;
+}
+
+/*button*/
+
+.button {
+  display: block;
+  margin: 0 auto;
+}
+
+.button-search:hover,
+.button:hover {
+  background-color: rgb(61, 135, 209);
+  border: none;
+  color: #fff;
+}
+
 /* Gallery List */
 
 .gallery-list {
@@ -34,13 +65,35 @@ img {
 
 .gallery-list img {
   display: block;
+  height: 300px;
+  object-fit: cover;
   max-width: 100%;
 }
+img:hover {
+  transform: scale(1.02);
+}
+
 /*Stats*/
 .stats {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+}
+.stats-item {
+  padding: 4px 8px;
+  margin: 4px;
+  border-radius: 2px;
+  background-color: #3f51b5;
+  color: #fff;
+  cursor: pointer;
+}
+
+.stats-item:hover,
+.stats-item:focus {
+  color: #0b0b0d;
+  transform: scale(1.1);
 }
 
 /* SPINNER */
